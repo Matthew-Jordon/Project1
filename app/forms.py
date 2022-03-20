@@ -11,5 +11,5 @@ class Create(FlaskForm):
     location = StringField('Location', [InputRequired()])
     price = DecimalField('Price',[InputRequired()],places=2,rounding=2)
     type = SelectField('Type',[InputRequired()],choices=[('House','House'), ('Apartment','Apartment')])
-    description = TextAreaField('Description',[DataRequired()])
+    description = TextAreaField('Description',[DataRequired(), Length(max=255)])
     pic = FileField('image', [DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'Images Only!')])
