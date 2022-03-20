@@ -1,0 +1,31 @@
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image {
+    max-width: 100%;
+}
+
+#thecontainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.card {
+    margin-left: 10px;
+    height: fit-content;
+}
+
+.panel {
+    padding: 10pc;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.price p {
+    border-radius: 80px;
+}

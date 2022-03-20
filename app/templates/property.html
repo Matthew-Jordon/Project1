@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <link rel="stylesheet" href="{{url_for('static', filename = 'css/property.css')}}">
+    <div class="container shadow" id="container">
+        <div class="image">
+            <img src="{{ url_for('get_images', filename=property.pic) }}" alt="" class="img-responsive img-rounded">
+        </div>
+        <div class="info">
+            <div class="title">
+               <p class="h2">{{property.title}}</p>
+            </div>
+            <div id="pricetc">
+                <p class="btn btn-success">{{property.price}}</p>
+                <p class="btn btn-warning">{{property.type}}</p>
+            </div>
+            <div>
+                <p>{{property.description}}</p>
+            </div>
+            <div class="rooms">
+                <p>{{property.beds}} Bedrooms</p>
+                <p>{{property.baths}} Bathrooms</p>
+            </div>
+            <div>
+            <p>{{property.location}}</p>
+            </div>
+            <div>
+                <button class="btn btn-primary">Email Realtor</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+img {
+    width: 25pc;
+    height: auto;
+}
+
+.info {
+    margin-left: 3pc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10pc;
+    width: 60pc;
+}
+
+#pricetc {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#pricetc p {
+    border-radius: 80px;
+}
+
+.rooms {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+button {
+    margin-bottom: 15px;
+}

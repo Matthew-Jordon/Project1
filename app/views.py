@@ -5,8 +5,14 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
+from pathlib import Path
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash, send_from_directory
+
+from app.models import Property, db
+from .forms import Create
+from werkzeug.utils import secure_filename
+import os
 
 
 ###
@@ -24,6 +30,49 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+@app.route('/properties/create', methods=['POST', 'GET'])
+def newproperty():
+    forms = Create()
+
+    if forms.validate_on_submit(): 
+        f = request.files.get('pic', False)
+        pic=secure_filename(f.filename)
+        if f:
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'] , secure_filename(f.filename)))
+    
+        property = Property(request.form['title'], 
+        request.form['beds'], 
+        request.form['baths'],
+        request.form['type'], 
+        request.form['location'], 
+        request.form['price'], 
+        request.form['description'],
+        pic)
+
+        db.session.add(property)
+        db.session.commit()
+        
+
+        flash('Property added', 'success')
+        return redirect(url_for('home'))
+    else:
+        flash('Unsupported file type','danger') 
+    return render_template('create.html', form = forms)
+
+@app.route('/properties')
+def view_properties():
+    properties=db.session.query(Property).all()
+    return render_template('properties.html', properties=properties)
+
+@app.route('/properties/<propertyid>')
+def show_property(propertyid):
+    property = db.session.query(Property).filter(Property.id == propertyid).first()
+    return render_template('property.html', property = property)
+
+@app.route('/uploads/<filename>')
+def get_images(filename):
+    root = os.getcwd()
+    return send_from_directory(root+'/'+app.config['UPLOAD_FOLDER'], filename)
 
 ###
 # The functions below should be applicable to all Flask apps.
